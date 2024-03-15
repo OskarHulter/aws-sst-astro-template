@@ -33,7 +33,7 @@ const { sortOptions, selectedSort } = Astro.props
 
 <script>
   // @ts-expect-error
-  import { getOramaDB, search } from '@orama/plugin-astro/client'
+  import { getOramaDB, search } from '@orama/orama'
   // We load the DB that we generated at build time, this is an asynchronous
   // operation, so we must either await, or rely on `.then` calls.
   const db = await getOramaDB('jobs')
