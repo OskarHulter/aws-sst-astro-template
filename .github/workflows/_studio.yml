@@ -39,8 +39,9 @@ jobs:
           yarn config set npmScopes.my-org.npmAuthToken $NPM_AUTH_TOKEN
           yarn config set cacheFolder ./.yarn/cache
           yarn config set nodeLinker node-modules
-          yarn config set enableTelemetry: false
-          yarn config set enableGlobalCache: false
+          yarn config set enableTelemetry false
+          yarn config set enableGlobalCache false
+          yarn config set enableMirror true
       - uses: jaid/action-npm-install@v1.2.1
         with:
           nodeEnv: development
