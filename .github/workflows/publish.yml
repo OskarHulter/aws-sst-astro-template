@@ -13,6 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+    - name: Install package manager
+      run: corepack enable
     - uses: actions/setup-node@v4
       with:
         architecture: x64
@@ -22,8 +24,6 @@ jobs:
           ./yarn.lock
           ./package.json
           ./.yarnrc.yml
-    - name: Install package manager
-      run: corepack enable
     - name: Setup .yarnrc.yml
       run: |
         yarn config set npmScopes.my-org.npmRegistryServer "https://npm.pkg.github.com"
