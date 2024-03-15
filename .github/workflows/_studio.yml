@@ -42,8 +42,6 @@ jobs:
           yarn config set enableTelemetry false
           yarn config set enableGlobalCache false
           yarn config set enableMirror true
-      - uses: jaid/action-npm-install@v1.2.1
-        with:
-          nodeEnv: development
-          packageManager: yarn
+      - name: Install dependencies
+        run: yarn
       - uses: withastro/action-studio@main

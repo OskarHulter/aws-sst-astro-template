@@ -36,8 +36,8 @@ jobs:
         yarn config set enableMirror true
       env:
         NPM_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - uses: jaid/action-npm-install@v1.2.1
-      with:
-        nodeEnv: production
-        packageManager: yarn
-    - run: yarn build
+    - name: Install dependencies
+      run: yarn
+
+    - name: build to publish
+      run: yarn build
