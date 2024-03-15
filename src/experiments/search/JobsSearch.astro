@@ -1,0 +1,66 @@
+---
+import { count, getByID } from '@orama/orama'
+
+interface Props {
+  sortOptions: { name: string; value: string }[]
+  selectedSort: string
+}
+
+const { sortOptions, selectedSort } = Astro.props
+---
+
+<form
+  name='sorting'
+  method='POST'
+  id='sortingForm'
+>
+  <select
+    id='sorting'
+    name='sort'
+  >
+    {
+      sortOptions.map((sortOption) => (
+        <option
+          value={sortOption.value}
+          selected={selectedSort === sortOption.value ? 'true' : false}
+        >
+          {sortOption.name}
+        </option>
+      ))
+    }
+  </select>
+</form>
+
+<script>
+  // @ts-expect-error
+  import { getOramaDB, search } from '@orama/plugin-astro/client'
+  // We load the DB that we generated at build time, this is an asynchronous
+  // operation, so we must either await, or rely on `.then` calls.
+  const db = await getOramaDB('jobs')
+
+  // Now we can search inside our DB. Of course, feel free to use it in more
+  // interesting ways.
+  console.log('Search Results')
+  console.log(await search(db, { term: 'mySearchTerm' }))
+
+  console.log('Get by ID Results')
+
+  // @ts-expect-error
+  console.log(await getByID(db, 'tt0482571'))
+
+  console.log('Count Results')
+
+  // @ts-expect-error
+  console.log(await count(db))
+  // Returns the original, full document
+
+  document.querySelector('#sorting')?.addEventListener('change', (e) => {
+    e.preventDefault()
+    // @ts-expect-error
+    document
+      .getElementById('sortInput')
+      ?.setAttribute('value', document.getElementById('sorting')?.value)
+    // @ts-expect-error
+    document.getElementById('filterForm')?.submit()
+  })
+</script>

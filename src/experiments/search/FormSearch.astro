@@ -1,0 +1,64 @@
+---
+import Keyword from '../../components/filter/Keyword.astro'
+import Type from '../../components/filter/Type.astro'
+import Location from '../../components/filter/Location.astro'
+import type { JobType } from 'astro:db'
+import type { TypedDocument, Orama, Results, SearchParams } from '@orama/orama'
+
+type JobDocument = TypedDocument<Orama<JobType>
+
+const searchParams: SearchParams<Orama<JobType>> = {
+  term: 'godfather',
+}
+const result: Results<JobDocument> = await search(movieDB, searchParams)
+const title = result.hits[0].document.title // well typed!
+console.log(title) // The Godfather
+console.log("ID:")
+console.log(idP)
+
+interface Props {
+  prefilled?: URLSearchParams
+  types: (typeof JobType.$inferSelect)[]
+  locations: string[]
+  type: string | null
+  location: string | null
+  sorting: string
+  searchParams: SearchParams<Orama<JobType>>
+  searchResult: Results<JobDocument>
+}
+
+// @ts-expect-error
+import { getOramaDB, search } from '@orama/plugin-astro/client'
+// We load the DB that we generated at build time, this is an asynchronous
+// operation, so we must either await, or rely on `.then` calls.
+const jobsDb = await getOramaDB('jobs')
+
+const { prefilled, types, locations, type, location, sorting, searchParams, searchResult} = Astro.props
+---
+searchResult
+<form
+  class='mt-6 flex flex-col gap-4 md:flex-row'
+  method='post'
+  id='filterForm'
+  name='filterForm'
+>
+  <Keyword {prefilled} />
+  <Type
+    {type}
+    {types}
+  />
+  <Location
+    {location}
+    {locations}
+  />
+  <input
+    name='search'
+    id='searchInput'
+    value={searchParams.term}
+  />
+  <button
+    type='submit'
+    class='button button-black button-large w-full md:w-40'
+    >Search</button
+  >
+</form>

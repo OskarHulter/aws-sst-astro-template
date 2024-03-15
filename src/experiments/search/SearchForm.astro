@@ -1,0 +1,42 @@
+---
+interface Props {
+  searchOptions: { name: string; value: string }[]
+  selectedSearch: string
+}
+
+const { searchOptions, selectedSearch } = Astro.props
+---
+
+<form
+  name='searching'
+  method='POST'
+  id='searchingForm'
+>
+  <select
+    id='searching'
+    name='search'
+  >
+    {
+      searchOptions.map((searchOption) => (
+        <option
+          value={searchOption.value}
+          selected={selectedSearch === searchOption.value ? 'true' : false}
+        >
+          {searchOption.name}
+        </option>
+      ))
+    }
+  </select>
+</form>
+
+<script>
+  document.querySelector('#searching')?.addEventListener('change', (e) => {
+    e.preventDefault()
+    // @ts-expect-error
+    document
+      .getElementById('searchInput')
+      ?.setAttribute('value', document.getElementById('searching')?.value)
+    // @ts-expect-error
+    document.getElementById('searchForm')?.submit()
+  })
+</script>
