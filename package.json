@@ -10,10 +10,20 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "start": "astro dev",
+    "start": "sst bind astro dev",
+    "test": "sst bind vitest run",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "typecheck": "tsc --noEmit",
+    "clean-cache": "yarn cache clean",
+    "clean-deps": "rm -rf ./node_modules",
+    "sst-sso": "aws sso login --sso-session=sln-signals",
+    "sst-dev": "sst dev",
+    "sst-build": "sst build",
+    "sst-deploy": "sst deploy",
+    "sst-remove": "sst remove",
+    "sst-console": "sst console"
   },
   "dependencies": {
     "@astrojs/check": "^0.5.9",
@@ -26,11 +36,20 @@
     "typescript": "^5.4.2"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.5.3",
-    "@tailwindcss/typography": "^0.5.10"
+    "@biomejs/biome": "1.6.1",
+    "@tailwindcss/typography": "^0.5.10",
+    "@tsconfig/node20": "^20.1.2",
+    "@types/aws-lambda": "^8.10.134",
+    "@types/node": "^20.11.1",
+    "astro-sst": "^2.41.2",
+    "aws-cdk-lib": "2.132.1",
+    "constructs": "10.3.0",
+    "sst": "^2.41.2",
+    "vitest": "1.4.0"
   },
   "engines": {
-    "node": "^20.0.0"
+    "node": "^20.11.1",
+    "yarn": "^4.1.1"
   },
   "packageManager": "yarn@4.1.1",
   "license": "MIT"

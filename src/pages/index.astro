@@ -5,6 +5,7 @@ import FormFilter from '@components/FormFilter.astro'
 import JobList from '@components/JobList.astro'
 import JobListHeader from '@components/JobListHeader.astro'
 import { db, eq, JobPosting, like, and, asc, desc, JobType, Company } from 'astro:db'
+
 const jobs = await db
   .select()
   .from(JobPosting)
@@ -68,15 +69,6 @@ if (sorting != null) {
   }
 }
 
-const searching = Astro.url.searchParams.get('keyword') ?? ''
-if (searching != null) {
-  if (searching !== '') {
-    console.log('searching')
-  } else if (sorting === '') {
-    query.orderBy(desc(JobPosting.posted))
-  }
-}
-
 returnedJobs = await query.execute()
 ---
 
@@ -92,7 +84,6 @@ returnedJobs = await query.execute()
       {types}
       {locations}
       {sorting}
-      {searching}
       {location}
       {type}
     />

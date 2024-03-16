@@ -2,7 +2,6 @@
 .yarn/install-state.gz
 .yarn/cache/*
 
-
 # build output
 dist/
 
@@ -25,3 +24,10 @@ pnpm-debug.log*
 
 # macOS-specific files
 .DS_Store
+
+# sst
+.sst
+.build
+
+# opennext
+.open-next

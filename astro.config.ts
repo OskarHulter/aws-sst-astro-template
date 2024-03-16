@@ -1,7 +1,7 @@
-import db from '@astrojs/db';
-import node from '@astrojs/node';
+import { defineConfig } from "astro/config"
+import aws from "astro-sst"
+import db from '@astrojs/db'
 import tailwind from '@astrojs/tailwind';
-import { defineConfig } from 'astro/config';
 
 
 // https://astro.build/config
@@ -13,7 +13,5 @@ export default defineConfig({
 		}),
 	],
 	output: 'server',
-	adapter: node({
-		mode: 'standalone',
-	}),
+  adapter: aws(), // node({ mode: 'standalone', }),
 })
